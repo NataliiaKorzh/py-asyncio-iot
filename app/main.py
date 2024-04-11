@@ -51,8 +51,10 @@ async def main() -> None:
         await run_parallel(
             service.send_msg(Message(hue_light_id, MessageType.SWITCH_OFF)),
             service.send_msg(Message(speaker_id, MessageType.SWITCH_OFF)),
-            service.send_msg(Message(toilet_id, MessageType.FLUSH)),
-            service.send_msg(Message(toilet_id, MessageType.CLEAN)),
+            run_sequence(
+                service.send_msg(Message(toilet_id, MessageType.FLUSH)),
+                service.send_msg(Message(toilet_id, MessageType.CLEAN)),
+            ),
         )
 
     # run the programs
